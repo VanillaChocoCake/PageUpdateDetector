@@ -8,7 +8,7 @@ def localtime():
     print(res)
 
 
-url = "https://yz.ustc.edu.cn"
+url = input("url:")
 html = requests.get(url)
 html.encoding = html.apparent_encoding
 html_prev = html
