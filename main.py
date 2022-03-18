@@ -5,21 +5,31 @@ import webbrowser
 
 def localtime():
     res = time.asctime(time.localtime(time.time()))
-    print(res)
+    return res
 
 
-url = "https://yz.ustc.edu.cn"
-html = requests.get(url)
-html.encoding = html.apparent_encoding
-html_prev = html
-while True:
-    html = requests.get(url)
+urls = ["https://auto.ustc.edu.cn/26085/list.htm",
+        "https://yz.ustc.edu.cn",
+        "https://sist.ustc.edu.cn/5142/list.htm"]
+htmls = []
+for url in urls:
+    htmls.append(requests.get(url))
+for html in htmls:
     html.encoding = html.apparent_encoding
-    if html.text != html_prev.text:
-        print(f"网页有更新！{localtime()}")
-        webbrowser.open(url)
-        time.sleep(600)
-    else:
-        html_prev = html
-        localtime()
-        time.sleep(60)
+htmls_prev = htmls
+while True:
+    htmls = []
+    for url in urls:
+        htmls.append(requests.get(url))
+    for html in htmls:
+        html.encoding = html.apparent_encoding
+    for i in range(0, len(htmls)):
+        html = htmls[i]
+        html_prev = htmls_prev[i]
+        url = urls[i]
+        if html.text != html_prev.text:
+            print(f"{localtime()}网页有更新！url={url}")
+            webbrowser.open(url)
+    print(localtime())
+    htmls_prev = htmls
+    time.sleep(60)
