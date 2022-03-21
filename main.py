@@ -8,9 +8,7 @@ def localtime():
     return res
 
 
-urls = ["https://auto.ustc.edu.cn/26085/list.htm",
-        "https://yz.ustc.edu.cn",
-        "https://sist.ustc.edu.cn/5142/list.htm"]
+urls = []
 htmls = []
 for url in urls:
     htmls.append(requests.get(url))
